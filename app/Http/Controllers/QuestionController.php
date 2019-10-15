@@ -25,7 +25,8 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        //
+        $question=new Question();
+        return view('questions.create',compact('question'));
     }
 
     /**
@@ -36,7 +37,16 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $this->validate($request,[
+          'title'=>'required|min:2',
+          'body' =>'required'
+      ]);
+      $questions=new Question();
+      $questions->title=$request->get('title');
+      $questions->body=$request->get('body');
+      $questions->user_id=$request->user()->id;
+      $questions->save();
+      return redirect()->route('questions.index');
     }
 
     /**
