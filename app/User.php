@@ -2,6 +2,7 @@
 
 namespace App;
 
+use http\Url;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -18,6 +19,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password',
     ];
+    protected $appends=['url'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -41,4 +43,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Question::class);
     }
+
+   public function getUrlAttribute(){
+       return 'aa';
+   }
 }
