@@ -72,12 +72,13 @@ class QuestionController extends Controller
      */
     public function edit(Question $question)
     {
-     if (\Gate::allows('update-question',$question)){
-         return view('questions.edit',compact('question'));
-     }
-
-     abort('404','Sehifeye giris izniniz yoxdur');
-
+//     if (\Gate::allows('update-question',$question)){
+//         return view('questions.edit',compact('question'));
+//     }
+//
+//     abort('404','Sehifeye giris izniniz yoxdur');
+        $this->authorize('update',$question);
+        return view('questions.edit',compact('question'));
     }
 
     /**
@@ -89,7 +90,8 @@ class QuestionController extends Controller
      */
     public function update(Request $request, Question $question)
     {
-        $this->authorize('update-question',$question);
+//        $this->authorize('update-question',$question);
+        $this->authorize('update',$question);
 
        $question->update($request->only(['title','body']));
        return redirect()->route('questions.index')->with('success','Sualda deyisiklik edildi');
