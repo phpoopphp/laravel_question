@@ -40,16 +40,24 @@
                                     <div class="d-flex align-items-center">
                                         <h3 class="mt-0"><a href="{{$question->url}}"> {{$question->title}}</a></h3>
                                         <div class="ml-auto">
-                                            <a href="{{route('questions.edit',$question->slug)}}"
-                                               class="btn btn-outline-info btn-sm">Edit </a>
-                                            <form action="{{route('questions.destroy',$question->slug)}}" method="post"
-                                                  class="pt-1 form-delete">
-                                                {{csrf_field()}}
-                                                {{method_field('DELETE')}}
-                                                <button class="btn btn-sm btn-outline-danger" type="submit"
-                                                        onclick="return confirm('Silmek isteyirsen')" >Delete
-                                                </button>
-                                            </form>
+                                            @can('update-question',$question)
+                                                <a href="{{route('questions.edit',$question->slug)}}"
+                                                   class="btn btn-outline-info btn-sm">Edit </a>
+
+                                                <form action="{{route('questions.destroy',$question->slug)}}" method="post"
+                                                      class="pt-1 form-delete">
+                                                    {{csrf_field()}}
+                                                    {{method_field('DELETE')}}
+                                                    <button class="btn btn-sm btn-outline-danger" type="submit"
+                                                            onclick="return confirm('Silmek isteyirsen')" >Delete
+                                                    </button>
+                                                </form>
+
+
+                                            @endcan
+
+
+
                                         </div>
                                     </div>
                                     <h3 class="mt-0">

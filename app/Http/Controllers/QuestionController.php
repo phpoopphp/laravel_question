@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Question;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
@@ -71,8 +72,12 @@ class QuestionController extends Controller
      */
     public function edit(Question $question)
     {
+     if (\Gate::allows('update-question',$question)){
+         return view('questions.edit',compact('question'));
+     }
 
-        return view('questions.edit',compact('question'));
+     abort('404','Sehifeye giris izniniz yoxdur');
+
     }
 
     /**
@@ -84,6 +89,7 @@ class QuestionController extends Controller
      */
     public function update(Request $request, Question $question)
     {
+        $this->authorize('update-question',$question);
 
        $question->update($request->only(['title','body']));
        return redirect()->route('questions.index')->with('success','Sualda deyisiklik edildi');
@@ -97,6 +103,7 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
+        $this->authorize('delete-question',$question);
         $question->delete();
         return redirect()->back()->with('success','Sual silindi');
     }
