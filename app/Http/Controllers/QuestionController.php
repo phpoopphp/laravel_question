@@ -47,11 +47,7 @@ class QuestionController extends Controller
           'title'=>'required|min:2',
           'body' =>'required'
       ]);
-      $questions=new Question();
-      $questions->title=$request->get('title');
-      $questions->body=$request->get('body');
-      $questions->user_id=$request->user()->id;
-      $questions->save();
+      $request->user()->questions()->create($request->only(['title','body']));
       return redirect()->route('questions.index')->with('success','Sual xetasiz qeyd olundu');
     }
 
@@ -74,7 +70,8 @@ class QuestionController extends Controller
      */
     public function edit(Question $question)
     {
-        //
+
+        return view('questions.edit',compact('question'));
     }
 
     /**
@@ -86,7 +83,9 @@ class QuestionController extends Controller
      */
     public function update(Request $request, Question $question)
     {
-        //
+
+       $question->update($request->only(['title','body']));
+       return redirect()->route('questions.index')->with('success','Sualda deyisiklik edildi');
     }
 
     /**
