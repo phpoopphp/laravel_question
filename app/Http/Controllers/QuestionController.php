@@ -59,7 +59,8 @@ class QuestionController extends Controller
      */
     public function show(Question $question)
     {
-        return $question;
+       $question->increment('views');
+       return view('questions.show',compact('question'));
     }
 
     /**
