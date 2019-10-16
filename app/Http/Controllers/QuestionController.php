@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index','show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -46,7 +52,7 @@ class QuestionController extends Controller
       $questions->body=$request->get('body');
       $questions->user_id=$request->user()->id;
       $questions->save();
-      return redirect()->route('questions.index');
+      return redirect()->route('questions.index')->with('success','Sual xetasiz qeyd olundu');
     }
 
     /**
