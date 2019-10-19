@@ -19,7 +19,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password',
     ];
-    protected $appends=['url'];
+    protected $appends = ['url'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -44,12 +44,20 @@ class User extends Authenticatable
         return $this->hasMany(Question::class);
     }
 
-   public function getUrlAttribute(){
-       return 'aa';
-   }
+    public function getUrlAttribute()
+    {
+        return 'aa';
+    }
+
+    public function getAvatarAttribute()
+    {
+        $email =$this->email;
+        $size = 32;
+        return "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) )  . "&s=" . $size;
+    }
 
     public function answers()
     {
         return $this->hasMany(Answer::class);
-   }
+    }
 }
