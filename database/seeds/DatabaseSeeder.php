@@ -14,10 +14,17 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
 //        factory(App\Question::class,10)->create();
 
-        factory(\App\User::class,4)->create()->each(function ($u){
-                $u->questions()->saveMany(
-                    factory(\App\Question::class,rand(1,10))->make()
-                );
+        factory(\App\User::class, 4)->create()->each(function ($u) {
+            $u->questions()->saveMany(
+                factory(\App\Question::class, rand(1, 10))->make()
+            )
+                ->each(function ($question) {
+                    $question->answers()->saveMany(
+                        factory(\App\Answer::class,rand(1,5))->make()
+                    );
+                });
         });
+
+
     }
 }
