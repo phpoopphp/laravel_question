@@ -7,7 +7,7 @@ use Psy\Util\Str;
 
 class Question extends Model
 {
-    protected $fillable = ['title','slug', 'body','anwers_count'];
+    protected $fillable = ['title','slug', 'body','answers_count'];
 
     protected $appends=['url'];
 

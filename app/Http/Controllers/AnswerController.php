@@ -13,26 +13,26 @@ class AnswerController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,Question $question)
+    public function store(Request $request, Question $question)
     {
-        $this->validate($request,[
-            'body'=>'required|min:3'
+        $this->validate($request, [
+            'body' => 'required|min:3'
         ]);
 
         $question->answers()->create([
-            'user_id'=>$request->user()->id,
-            'body'=>$request->get('body')
+            'user_id' => $request->user()->id,
+            'body' => $request->get('body')
         ]);
-        return redirect()->back()->with('success','Sualiniz xetasiz qeyd olundu');
+        return redirect()->back()->with('success', 'Sualiniz xetasiz qeyd olundu');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Answer  $answer
+     * @param \App\Answer $answer
      * @return \Illuminate\Http\Response
      */
     public function show(Answer $answer)
@@ -43,34 +43,43 @@ class AnswerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Answer  $answer
+     * @param \App\Answer $answer
      * @return \Illuminate\Http\Response
      */
-    public function edit(Answer $answer)
+    public function edit(Question $question, Answer $answer)
     {
-        //
+        $this->authorize('update', $answer);
+        return view('answers.edit', compact('question', 'answer'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Answer  $answer
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Answer $answer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Answer $answer)
+    public function update(Request $request, Question $question, Answer $answer)
     {
-        //
+        $this->validate($request, [
+            'body' => 'required|min:2'
+        ]);
+        $answer->update($request->all());
+        return redirect()->route('questions.show', $question->slug)
+            ->with('success', 'Cavabda deyisiklikler edildi');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Answer  $answer
+     * @param \App\Answer $answer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Answer $answer)
+    public function destroy(Question $question,Answer $answer)
     {
-        //
+        $this->authorize('delete',$answer);
+        $answer->delete();
+        return redirect()->route('questions.show', $question->slug)
+            ->with('success', 'Answer deleted');
     }
 }

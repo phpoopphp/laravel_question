@@ -19,16 +19,45 @@
                                 <a href="#" title="This question is useful" class="vote-down off">
                                     <i class="fas fa-caret-down fa-2x"></i>
                                 </a>
-                                <a href="#" title="Mark this answer as best answer" class="vote-accept mt-2 favorited">
+                                <a href="#" title="Mark this answer as best answer" class="{{$answer->status}} mt-2">
                                     <i class="fas fa-check fa-2x"></i>
                                 </a>
                             </div>
                             <div class="media-body">
                                 <span class="badge badge-primary">{{$loop->index+1}}</span>
                                 {!! $answer->body_html !!}
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        @can('update',$answer)
+                                            <a href="{{route('questions.answers.edit',[
+                                            'question'=>$question->slug,
+                                            'answer'=>$answer->id])}}"
+                                               class="btn btn-outline-info btn-sm">Edit </a>
+
+                                        @endcan
+                                        @can('delete',$answer)
+
+                                            <form action="{{route('questions.answers.destroy',[
+                                            'question'=>$question->slug,
+                                            'answer'=>$answer->id])}}"
+                                                  method="post"
+                                                  class="pt-1 form-delete">
+                                                {{csrf_field()}}
+                                                {{method_field('DELETE')}}
+                                                <button class="btn btn-sm btn-outline-danger" type="submit"
+                                                        onclick="return confirm('Silmek isteyirsen')">Delete
+                                                </button>
+                                            </form>
 
 
-                                @include('questions.user', ['data' => $answer])
+                                        @endcan
+                                    </div>
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-4">
+                                        @include('questions.user', ['data' => $answer])
+                                    </div>
+                                </div>
+
 
                             </div>
                         </div>

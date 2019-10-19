@@ -1,4 +1,4 @@
-<div class="float-right">
+<div>
     <span class="text-muted">Answered : {{$data->created_at->diffForHumans()}}</span>
     <div class="media">
         <a href="{{$data->user->url}}" class="btn btn-link pr-2">
