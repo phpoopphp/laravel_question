@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">
-                    {{$question->answers_count. "  ".\Str::plural('answer',$question->answers_count)}}
+                    {{$question->answer_counts. "  ".\Str::plural('answer',$question->answer_counts)}}
                 </h4>
             </div>
             <div class="card-body">
@@ -12,13 +12,36 @@
                     @foreach($question->answers as $answer)
                         <div class="media">
                             <div class="flex flex-column vote-controls">
-                                <a href="#" title="This question is useful" class="vote-up">
+                                <a href="#" title="This question is useful"
+                                   onclick="event.preventDefault(); document.getElementById('up-vote-answers-{{$answer->id}}').submit();"
+                                   class="vote-up">
                                     <i class="fas fa-caret-up fa-2x"></i>
                                 </a>
-                                <span class="votes-count">1230</span>
-                                <a href="#" title="This question is useful" class="vote-down off">
+
+                                <form
+                                        action="{{route('votes.answers',$answer->id)}}"
+                                        id="up-vote-answers-{{$answer->id}}"
+                                        method="post">
+                                    @csrf
+                                    <input type="hidden" name="vote" value="1">
+
+                                </form>
+
+                                <span class="votes-count">{{$answer->votes_count}}</span>
+                                <a href="#" title="This question is useful"
+                                   onclick="event.preventDefault(); document.getElementById('down-vote-answers-{{$answer->id}}').submit();"
+                                   class="vote-down off">
                                     <i class="fas fa-caret-down fa-2x"></i>
                                 </a>
+
+                                <form
+                                        action="{{route('votes.answers',$answer->id)}}"
+                                        id="down-vote-answers-{{$answer->id}}"
+                                        method="post">
+                                    @csrf
+                                    <input type="hidden" name="vote" value="-1">
+
+                                </form>
                                 @can('accept',$answer)
                                     <a href="#" title="Mark this answer as best answer"
                                        class="{{$answer->status}} mt-2"
