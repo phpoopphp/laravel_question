@@ -11,6 +11,8 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    protected  $appends=['avatar'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -19,7 +21,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password',
     ];
-    protected $appends = ['url'];
+
 
     /**
      * The attributes that should be hidden for arrays.

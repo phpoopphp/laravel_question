@@ -8,6 +8,7 @@ use Psy\Util\Str;
 class Question extends Model
 {
     use VotableTrait;
+    protected $with=['user'];
     protected $fillable = ['title', 'slug', 'body', 'answers_count'];
 
     protected $appends = ['url'];
