@@ -1,5 +1,5 @@
 <div>
-    <span class="text-muted">Answered : {{$data->created_at->diffForHumans()}}</span>
+    <span class="text-muted">{{$label}} : {{$data->created_at->diffForHumans()}}</span>
     <div class="media">
         <a href="{{$data->user->url}}" class="btn btn-link pr-2">
             <img src="{{asset($data->user->avatar)}}" alt=""/>

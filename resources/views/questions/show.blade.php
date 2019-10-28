@@ -59,7 +59,7 @@
                         </div>
                         <div class="media-body pl-4">
                             {!!  $question->body_html!!}
-                            @include('questions.user', ['data' => $question])
+                            @include('questions.user', ['data' => $question,'label'=>'Created'])
                         </div>
                     </div>
                 </div>

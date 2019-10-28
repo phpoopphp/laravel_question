@@ -68,6 +68,4 @@ class Answer extends Model
 
     }
 
-
-
 }

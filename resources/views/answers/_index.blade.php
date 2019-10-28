@@ -94,7 +94,7 @@
                                     </div>
                                     <div class="col-md-4"></div>
                                     <div class="col-md-4">
-                                        @include('questions.user', ['data' => $answer])
+                                        @include('questions.user', ['data' => $answer,'label'=>'Answered'])
                                     </div>
                                 </div>
 
