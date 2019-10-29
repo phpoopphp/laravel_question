@@ -53,26 +53,28 @@
             @endcan
         </div>
         <div class="media-body">
-            <form v-if="editing">
+            <form v-if="editing" @submit.prevent="update">
                <div class="form-group">
-                   <textarea class="form-control" v-model="answer.body"></textarea>
+                   <textarea
+                           required
+                           rows="10" class="form-control" v-model="body"></textarea>
                </div>
                 <div class="form-group">
-                    <button class="btn btn-primary btn-sm" @click="editing=false;update()">Update</button>
-                    <button class="btn btn-info btn-sm" @click="editing=false">Cancel</button>
+                    <button type="submit" class="btn btn-primary btn-sm" :disabled="isInvalid">Update</button>
+                    <button class="btn btn-info btn-sm" @click="cancel">Cancel</button>
                 </div>
             </form>
           <div v-else>
-              <div v-html="answer.body_html"></div>
+              <div v-html="bodyHtml"></div>
               <div class="row">
                   <div class="col-md-4">
                       @can('update',$answer)
-                          <a href="{{route('questions.answers.edit',[
-                                            'question'=>$question->slug,
-                                            'answer'=>$answer->id])}}"
-                             class="btn btn-outline-info btn-sm">Edit </a>
+{{--                          <a href="{{route('questions.answers.edit',[--}}
+{{--                                            'question'=>$question->slug,--}}
+{{--                                            'answer'=>$answer->id])}}"--}}
+{{--                             class="btn btn-outline-info btn-sm">Edit </a>--}}
 
-                          <a  @click.prevent="editing=true"
+                          <a  @click.prevent="edit"
                               class="btn btn-outline-info btn-sm">Edit </a>
 
                       @endcan

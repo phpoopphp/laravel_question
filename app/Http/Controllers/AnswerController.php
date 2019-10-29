@@ -65,6 +65,12 @@ class AnswerController extends Controller
             'body' => 'required|min:2'
         ]);
         $answer->update($request->all());
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'Cavabiniz xetasiz deyisildi',
+                'body_html' => $request->body
+            ]);
+        }
         return redirect()->route('questions.show', $question->slug)
             ->with('success', 'Cavabda deyisiklikler edildi');
     }
@@ -75,9 +81,9 @@ class AnswerController extends Controller
      * @param \App\Answer $answer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Question $question,Answer $answer)
+    public function destroy(Question $question, Answer $answer)
     {
-        $this->authorize('delete',$answer);
+        $this->authorize('delete', $answer);
         $answer->delete();
         return redirect()->route('questions.show', $question->slug)
             ->with('success', 'Answer deleted');

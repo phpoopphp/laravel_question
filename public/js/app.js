@@ -3718,12 +3718,39 @@ __webpack_require__.r(__webpack_exports__);
   props: ['answer'],
   data: function data() {
     return {
-      editing: false
+      editing: false,
+      body: this.answer.body,
+      bodyHtml: this.answer.body_html,
+      id: this.answer.id,
+      question: this.answer.question,
+      beforeEditCache: ''
     };
   },
+  computed: {
+    isInvalid: function isInvalid() {
+      return this.body.length < 3;
+    }
+  },
   methods: {
+    edit: function edit() {
+      this.beforeEditCache = this.body;
+      this.editing = true;
+    },
+    cancel: function cancel() {
+      this.body = this.beforeEditCache;
+      this.editing = false;
+    },
     update: function update() {
-      alert('Update');
+      var _this = this;
+
+      axios.patch("/questions/".concat(this.question.slug, "/answers/").concat(this.id), {
+        'body': this.body
+      }).then(function (res) {
+        _this.editing = false;
+        _this.bodyHtml = res.data.body_html;
+      })["catch"](function (error) {
+        console.log(error.response.data.errors.body[0]);
+      });
     }
   }
 });
