@@ -30,6 +30,18 @@
                 this.body=this.beforeEditCache;
                 this.editing=false;
             },
+            deleteAnswer(){
+                alert('ad');
+                axios.delete(`/questions/${this.question.slug}/answers/${this.id}`)
+                    .then((res)=>{
+                        $(this.$el).fadeOut(500,function () {
+                            alert(res.data.message);
+                        });
+                    })
+                    .catch((error)=>{
+                        console.log('Xeta var');
+                    });
+            },
             update(){
 
                axios.patch(`/questions/${this.question.slug}/answers/${this.id}`,{
@@ -42,7 +54,9 @@
                    .catch((error)=>{
                        console.log(error.response.data.errors.body[0]);
                    })
-            }
+            },
+
+
         }
     }
 </script>

@@ -85,6 +85,9 @@ class AnswerController extends Controller
     {
         $this->authorize('delete', $answer);
         $answer->delete();
+        if(\request()->expectsJson()){
+            return response()->json(['message'=>'Cavab xetasiz silindi']);
+        }
         return redirect()->route('questions.show', $question->slug)
             ->with('success', 'Answer deleted');
     }

@@ -3740,14 +3740,26 @@ __webpack_require__.r(__webpack_exports__);
       this.body = this.beforeEditCache;
       this.editing = false;
     },
-    update: function update() {
+    deleteAnswer: function deleteAnswer() {
       var _this = this;
+
+      alert('ad');
+      axios["delete"]("/questions/".concat(this.question.slug, "/answers/").concat(this.id)).then(function (res) {
+        $(_this.$el).fadeOut(500, function () {
+          alert(res.data.message);
+        });
+      })["catch"](function (error) {
+        console.log('Xeta var');
+      });
+    },
+    update: function update() {
+      var _this2 = this;
 
       axios.patch("/questions/".concat(this.question.slug, "/answers/").concat(this.id), {
         'body': this.body
       }).then(function (res) {
-        _this.editing = false;
-        _this.bodyHtml = res.data.body_html;
+        _this2.editing = false;
+        _this2.bodyHtml = res.data.body_html;
       })["catch"](function (error) {
         console.log(error.response.data.errors.body[0]);
       });

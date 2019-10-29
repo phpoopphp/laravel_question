@@ -80,7 +80,19 @@
                       @endcan
                       @can('delete',$answer)
 
-                              <button class="btn btn-sm btn-outline-danger" @click="deleteAnswer()">Delete</button>
+                          <form action="{{route('questions.answers.destroy',[
+                                            'question'=>$question->slug,
+                                            'answer'=>$answer->id])}}"
+                                method="post"
+                                class="pt-1 form-delete">
+                              {{csrf_field()}}
+                              {{method_field('DELETE')}}
+                              <button class="btn btn-sm btn-outline-danger" type="submit"
+                                      onclick="return confirm('Silmek isteyirsen')">Delete
+                              </button>
+                          </form>
+
+
                       @endcan
                   </div>
                   <div class="col-md-4"></div>
