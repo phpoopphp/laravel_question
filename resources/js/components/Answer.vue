@@ -31,11 +31,11 @@
                 this.editing=false;
             },
             deleteAnswer(){
-                alert('ad');
+                const th=this;
                 axios.delete(`/questions/${this.question.slug}/answers/${this.id}`)
                     .then((res)=>{
                         $(this.$el).fadeOut(500,function () {
-                            alert(res.data.message);
+                            th.$toast.success(res.data.message,'Tebrikler',{timeout:3000});
                         });
                     })
                     .catch((error)=>{
@@ -50,9 +50,11 @@
                    .then((res)=>{
                        this.editing=false;
                        this.bodyHtml=res.data.body_html;
+                       this.$toast.success(res.data.message,'Tebrikler',{timeout:3000});
                    })
                    .catch((error)=>{
                        console.log(error.response.data.errors.body[0]);
+                       this.$toast.error('Bir xeta oldu','Xeta var',{timeout:3000});
                    })
             },
 
