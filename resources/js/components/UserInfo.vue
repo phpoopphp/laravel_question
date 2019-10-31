@@ -22,6 +22,7 @@
             postDate(){
                 return this.label+" "+this.model.created_at;
             }
+
         },
         data(){
             return {
@@ -29,7 +30,8 @@
             }
         },
         mounted() {
-            // console.log(this.label);
+
+
         }
 
     }

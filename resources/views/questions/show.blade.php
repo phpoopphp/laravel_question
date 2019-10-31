@@ -52,10 +52,9 @@
 
                             </form>
 
-                            <a href="#" title="Click to mark as favorite (Click again to undo)"
-                               class="favorite mt-2 favorited">
-                                <i class="fas fa-star fa-2x"></i> <span class="favorites-count">123</span>
-                            </a>
+
+                            <favorite :question="{{$question}}"></favorite>
+
                         </div>
                         <div class="media-body pl-4">
                             {!!  $question->body_html!!}

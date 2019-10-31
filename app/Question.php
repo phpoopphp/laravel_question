@@ -11,7 +11,7 @@ class Question extends Model
     protected $with=['user'];
     protected $fillable = ['title', 'slug', 'body', 'answers_count'];
 
-    protected $appends = ['url'];
+    protected $appends = ['url','is_favorited','favorites_count'];
 
     public function user()
     {
