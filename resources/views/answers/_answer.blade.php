@@ -33,7 +33,8 @@
             </form>
 
 {{--            @include('answers._accept')--}}
-            <accept :answer="{{$answer}}"></accept>
+
+            <vote :model="{{$answer}}" name="accept"></vote>
 
 
         </div>
