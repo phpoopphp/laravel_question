@@ -18,7 +18,7 @@
             return {
                 count: this.question.favorites_count,
                 isFavorited: this.question.is_favorited,
-                signedIn:  window.Auth.signedIn,
+
             }
         },
         methods: {

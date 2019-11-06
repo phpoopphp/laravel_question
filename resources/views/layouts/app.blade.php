@@ -81,7 +81,7 @@
 <!-- Scripts -->
 <script>
     window.Auth ={!! json_encode(['signedIn'=>auth()->check(),
-        'use' => auth()->user()]); !!}
+        'user' => auth()->user()]); !!}
 </script>
 <script src="{{ asset('js/app.js') }}"></script>
 </body>

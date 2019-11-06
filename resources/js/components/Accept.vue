@@ -40,8 +40,8 @@
               }
         },
         computed:{
-            canAccept(){
-                return true;
+            canAccept () {
+                return this.authorize('accept', this.answer);
             },
             accepted(){
                 return ! this.canAccept && this.isBest;
