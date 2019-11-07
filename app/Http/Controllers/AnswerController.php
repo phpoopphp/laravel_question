@@ -26,6 +26,9 @@ class AnswerController extends Controller
             'user_id' => $request->user()->id,
             'body' => $request->get('body')
         ]);
+        if($request->expectsJson()){
+            return response()->json(['success'=>'Sualiniz xetasiz qeyd olundu'],201);
+        }
         return redirect()->back()->with('success', 'Sualiniz xetasiz qeyd olundu');
     }
 
